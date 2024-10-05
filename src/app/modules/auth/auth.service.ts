@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-import { TUser } from "./auth.interface";
+import { TRole, TUser } from "./auth.interface";
 import { AuthModel } from "./auth.model";
 import { JwtPayload } from "jsonwebtoken";
 import { createToken, omitPassword } from "./auth.utils";
@@ -21,9 +21,6 @@ const signupUserIntoDB = async (payload: TUser) => {
 const loginUserService = async (payload: JwtPayload) => {
   const existingUser = await AuthModel.isUserExist(payload.email);
 
-  console.log(existingUser);
-  console.log(payload);
-
   if (!existingUser) {
     throw new AppError(httpStatus.BAD_REQUEST, "Invalid Email");
   }
@@ -33,15 +30,13 @@ const loginUserService = async (payload: JwtPayload) => {
     existingUser.password,
   );
 
-  console.log(correctPassword);
-
   if (!correctPassword) {
     throw new AppError(httpStatus.BAD_REQUEST, "Invalid Password");
   }
 
   const jwtPayload = {
     email: existingUser.email,
-    role: existingUser.role,
+    role: existingUser.role as string,
   };
 
   const token = createToken(
@@ -55,7 +50,50 @@ const loginUserService = async (payload: JwtPayload) => {
   return { token, user: loggedUserWithoutPassword };
 };
 
+const getAllUsers = async () => {
+  const users = await AuthModel.find({}, "-password");
+  return users;
+};
+
+const updateUserRole = async (
+  userId: string,
+  newRole: TRole,
+  adminEmail: string,
+) => {
+  const userToUpdate = await AuthModel.findById(userId);
+
+  if (!userToUpdate) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  const isAdmin = await AuthModel.isAdmin(adminEmail);
+
+  if (!isAdmin) {
+    throw new AppError(
+      httpStatus.FORBIDDEN,
+      "Only admins can update user roles",
+    );
+  }
+
+  if (userToUpdate.role === "admin") {
+    throw new AppError(httpStatus.FORBIDDEN, "Admin roles cannot be changed");
+  }
+
+  await AuthModel.findByIdAndUpdate(
+    userId,
+    { role: newRole },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  return omitPassword(userToUpdate);
+};
+
 export const UserService = {
   signupUserIntoDB,
   loginUserService,
+  getAllUsers,
+  updateUserRole,
 };

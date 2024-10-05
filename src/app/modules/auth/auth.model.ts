@@ -23,6 +23,7 @@ const authSchema = new Schema<TUser, AuthStaticMethods>({
   },
   totalBuy: {
     type: String,
+    default: 0,
   },
 });
 
@@ -50,6 +51,11 @@ authSchema.statics.isPasswordMatch = async function (
   hashedPassword: string,
 ) {
   return await bcrypt.compare(plainPassword, hashedPassword);
+};
+
+authSchema.statics.isAdmin = async function (userEmail: string) {
+  const user = await AuthModel.findOne({ email: userEmail });
+  return user?.role === "admin";
 };
 
 export const AuthModel = model<TUser, AuthStaticMethods>("User", authSchema);

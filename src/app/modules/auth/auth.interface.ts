@@ -1,12 +1,12 @@
 import { Model } from "mongoose";
 
-type TRole = "admin" | "user";
+export type TRole = "admin" | "user";
 
 export interface TUser {
   name: string;
   email: string;
   password: string;
-  role: TRole;
+  role?: TRole;
   totalBuy?: number;
 }
 
@@ -16,4 +16,5 @@ export interface AuthStaticMethods extends Model<TUser> {
     plainPassword: string,
     hashedPassword: string,
   ): Promise<boolean>;
+  isAdmin(userId: string): Promise<boolean>;
 }

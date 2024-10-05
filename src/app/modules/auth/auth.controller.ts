@@ -26,7 +26,35 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
+const getAllUsers = catchAsync(async (req, res) => {
+  const result = await UserService.getAllUsers();
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Users retrieved successfully",
+    data: result,
+  });
+});
+
+const updateUserRole = catchAsync(async (req, res) => {
+  const { userId } = req.params;
+  const { role } = req.body;
+  const adminId = req.user.email;
+
+  const result = await UserService.updateUserRole(userId, role, adminId);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User role updated successfully",
+    data: result,
+  });
+});
+
 export const UserController = {
   signupUser,
   loginUser,
+  getAllUsers,
+  updateUserRole,
 };
