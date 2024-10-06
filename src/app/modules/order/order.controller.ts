@@ -5,7 +5,7 @@ import httpStatus from "http-status";
 import { OrderService } from "./order.service";
 
 const createOrder = catchAsync(async (req: Request, res: Response) => {
-  const result = await OrderService.createOrder(req.body);
+  const result = await OrderService.createOrder(req.body, req.user.email);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,

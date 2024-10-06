@@ -6,9 +6,14 @@ import AppError from "../../errors/AppError";
 import httpStatus from "http-status";
 import ProductModel from "../product/product.model";
 
-const createOrder = async (orderData: Order): Promise<Order> => {
+const createOrder = async (
+  orderData: Order,
+  userEmail: string,
+): Promise<Order> => {
   const session = await OrderModel.startSession();
   session.startTransaction();
+
+  const totalProducts = orderData.products.length;
 
   try {
     // Create the order
@@ -32,8 +37,8 @@ const createOrder = async (orderData: Order): Promise<Order> => {
 
     // Update user's totalBuy
     const updatedUser = await AuthModel.findOneAndUpdate(
-      { email: orderData.email },
-      { $inc: { totalBuy: orderData.products.length } },
+      { email: userEmail },
+      { $inc: { totalBuy: totalProducts } },
       { new: true, session },
     );
 

@@ -1,7 +1,7 @@
 export interface Order {
   totalAmount: number;
   paymentMethod: "COD" | "Stripe";
-  status: "Pending" | "Completed" | "Cancelled";
+  status?: "Pending" | "Completed" | "Cancelled";
   city: string;
   address: string;
   phone: string;

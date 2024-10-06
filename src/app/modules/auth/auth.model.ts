@@ -22,7 +22,7 @@ const authSchema = new Schema<TUser, AuthStaticMethods>({
     default: "user",
   },
   totalBuy: {
-    type: String,
+    type: Number,
     default: 0,
   },
 });

@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post(
   "/create",
+  authorization("admin", "user"),
   validateRequest(OrderValidation.createOrderZodSchema),
   OrderController.createOrder,
 );
