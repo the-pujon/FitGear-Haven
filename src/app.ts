@@ -9,7 +9,8 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    //origin: process.env.FRONTEND_URL,
+    origin: ["http://localhost:5173", "https://primelifefit.netlify.app"],
     credentials: true,
   }),
 );
