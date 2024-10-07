@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderService = void 0;
 const order_model_1 = require("./order.model");
-//import { ProductModel } from "../product/product.model";
 const auth_model_1 = require("../auth/auth.model");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const http_status_1 = __importDefault(require("http-status"));

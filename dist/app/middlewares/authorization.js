@@ -13,14 +13,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorization = void 0;
-//import catchAsync from "../utils/catchAsync.";
 const AppError_1 = __importDefault(require("../errors/AppError"));
 const http_status_1 = __importDefault(require("http-status"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config"));
 const catchAsync_1 = __importDefault(require("../utils/catchAsync"));
 const auth_model_1 = require("../modules/auth/auth.model");
-//import { UserModel } from "../modules/auth/auth.model";
 const authorization = (...requiredRoles) => {
     return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
@@ -30,7 +28,6 @@ const authorization = (...requiredRoles) => {
             throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, "You are not authorized. Login first");
         }
         const decoded = jsonwebtoken_1.default.verify(token, config_1.default.jwt_access_secret);
-        //console.log(decode, requireRole);
         const { email, role } = decoded;
         const user = yield auth_model_1.AuthModel.isUserExist(email);
         //if user not found

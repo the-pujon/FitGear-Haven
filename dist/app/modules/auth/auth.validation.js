@@ -18,9 +18,6 @@ exports.LoginValidation = zod_1.z.object({
     }),
 });
 exports.UpdateUserRoleValidation = zod_1.z.object({
-    //params: z.object({
-    //  userId: z.string(),
-    //}),
     body: zod_1.z.object({
         role: zod_1.z.enum(["user", "admin"]),
     }),
