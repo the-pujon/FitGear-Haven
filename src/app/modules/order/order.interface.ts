@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface Order {
   totalAmount: number;
   paymentMethod: "COD" | "Stripe";
@@ -7,7 +9,7 @@ export interface Order {
   phone: string;
   email: string;
   products: {
-    productId: string;
+    product: Types.ObjectId;
     name: string;
     price: number;
     quantity: number;

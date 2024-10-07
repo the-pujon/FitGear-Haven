@@ -22,7 +22,7 @@ const createOrder = async (
     // Update product quantities
     for (const product of orderData.products) {
       const updatedProduct = await ProductModel.findByIdAndUpdate(
-        product.productId,
+        product.product,
         { $inc: { stock: -product.quantity } },
         { new: true, session },
       );
@@ -58,11 +58,11 @@ const createOrder = async (
 };
 
 const getAllOrders = async (): Promise<Order[]> => {
-  return OrderModel.find().populate("products.productId");
+  return OrderModel.find().populate("products.product");
 };
 
 const getSingleOrder = async (id: string): Promise<Order | null> => {
-  return OrderModel.findById(id).populate("products.productId");
+  return OrderModel.findById(id).populate("products.product");
 };
 
 const updateOrder = async (

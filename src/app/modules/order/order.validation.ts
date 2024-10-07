@@ -10,7 +10,7 @@ const createOrderZodSchema = z.object({
     email: z.string().email(),
     products: z.array(
       z.object({
-        productId: z.string(),
+        product: z.string(),
         name: z.string(),
         price: z.number().positive(),
         quantity: z.number().positive(),

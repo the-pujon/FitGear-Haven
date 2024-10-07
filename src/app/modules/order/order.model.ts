@@ -16,7 +16,7 @@ const orderSchema = new Schema<Order>(
     email: { type: String, required: true },
     products: [
       {
-        productId: {
+        product: {
           type: Schema.Types.ObjectId,
           ref: "Product",
           required: true,
