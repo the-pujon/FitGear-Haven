@@ -1,6 +1,5 @@
 import { Order } from "./order.interface";
 import { OrderModel } from "./order.model";
-//import { ProductModel } from "../product/product.model";
 import { AuthModel } from "../auth/auth.model";
 import AppError from "../../errors/AppError";
 import httpStatus from "http-status";

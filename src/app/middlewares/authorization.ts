@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-//import catchAsync from "../utils/catchAsync.";
 import AppError from "../errors/AppError";
 import httpStatus from "http-status";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../config";
 import catchAsync from "../utils/catchAsync";
 import { AuthModel } from "../modules/auth/auth.model";
-//import { UserModel } from "../modules/auth/auth.model";
 
 export const authorization = (...requiredRoles: ("admin" | "user")[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +20,6 @@ export const authorization = (...requiredRoles: ("admin" | "user")[]) => {
 
     const decoded = jwt.verify(token, config.jwt_access_secret as string);
 
-    //console.log(decode, requireRole);
     const { email, role } = decoded as JwtPayload;
 
     const user = await AuthModel.isUserExist(email);

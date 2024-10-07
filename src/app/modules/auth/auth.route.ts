@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { UserController } from "./auth.controller";
-//import validateRequest from "../../middlewares/validateRequest";
 import {
   SignupValidation,
   LoginValidation,
@@ -8,7 +7,6 @@ import {
 } from "./auth.validation";
 import validateRequest from "../../middlewares/validateRequess";
 import { authorization } from "../../middlewares/authorization";
-//import auth from "../../middlewares/auth";
 
 const router = Router();
 

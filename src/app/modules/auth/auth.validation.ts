@@ -18,9 +18,6 @@ export const LoginValidation = z.object({
 });
 
 export const UpdateUserRoleValidation = z.object({
-  //params: z.object({
-  //  userId: z.string(),
-  //}),
   body: z.object({
     role: z.enum(["user", "admin"]),
   }),
